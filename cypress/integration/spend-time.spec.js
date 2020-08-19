@@ -95,7 +95,7 @@ context('Actions', () => {
                 }
 
                 // CAUTION: It'll really create a new registry on redmine!!!
-                cy.get('input[name="commit"]').click()
+                // cy.get('input[name="commit"]').click()
               })
           } else {
             cy.log('Has no hours registered')
@@ -111,7 +111,7 @@ context('Actions', () => {
             }
 
             // CAUTION: It'll really create a new registry on redmine!!!
-            cy.get('input[name="commit"]').click()
+            // cy.get('input[name="commit"]').click()
           }
         })
       })

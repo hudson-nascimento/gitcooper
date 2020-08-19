@@ -81,6 +81,7 @@ const withClient = async (answers: Answers) => {
       const { totalPassed, runs } = await cypress.run({
         quiet: true,
         spec: './cypress/integration/spend-time.spec.js',
+        configFile: false,
         env: {
           username: configurationVault.getLdapUsername(),
           password: configurationVault.getLdapPassword(),
