@@ -23,12 +23,14 @@ export type Answers = {
   title: string,
   message: string,
   refs: string,
-  coAuthors: string
+  coAuthors: string,
+  spendTime: boolean
 }
 
 export type Options = {
   refs: boolean,
-  coAuthors: boolean
+  coAuthors: boolean,
+  spendTime: boolean
 }
 
 export default (gitmojis: Array<Gitmoji>, options: Options): Array<Object> => [
@@ -83,6 +85,16 @@ export default (gitmojis: Array<Gitmoji>, options: Options): Array<Object> => [
           message: 'Co-authors (Separated by comma):',
           validate: guard.coAuthors,
           filter: filter.coAuthors
+        }
+      ]
+    : []),
+  ...((options && options.spendTime) || false
+    ? [
+        {
+          name: 'spendTime',
+          type: 'confirm',
+          default: true,
+          message: 'Should create spend time registry on Redmine?:'
         }
       ]
     : [])

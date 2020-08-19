@@ -18,6 +18,12 @@ const config = () => {
     ),
       configurationVault.setContacts(
         answers[CONFIGURATION_PROMPT_NAMES.CONTACTS]
+      ),
+      configurationVault.setLdapUsername(
+        answers[CONFIGURATION_PROMPT_NAMES.LDAP_USERNAME]
+      ),
+      configurationVault.setLdapPassword(
+        answers[CONFIGURATION_PROMPT_NAMES.LDAP_PASSWORD]
       )
   })
 }

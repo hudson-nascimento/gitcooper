@@ -1,6 +1,7 @@
 // @flow
 import execa from 'execa'
 import chalk from 'chalk'
+import cypress from 'cypress'
 
 import isHookCreated from '../../../utils/isHookCreated'
 import getContacts from '../../../utils/getContacts'
@@ -67,6 +68,39 @@ const withClient = async (answers: Answers) => {
     }
 
     const { stdout } = await execa('git', cmdArgs)
+
+    if (answers.spendTime) {
+      const issue = answers.refs ? answers.refs.replace('#', '') : ''
+      if (!issue.trim().length) {
+        throw new Error(
+          `No issue defined. Please, use the option --refs and type the issue number. E.g.: #1064. To create spend time registry manually run: npm run spend-time --env issue=${issue},comment="${title}"`
+        )
+      }
+
+      console.log(`Creating spend time on Redmine for issue ${issue}...`)
+      const { totalPassed, runs } = await cypress.run({
+        quiet: true,
+        spec: './cypress/integration/spend-time.spec.js',
+        env: {
+          username: configurationVault.getLdapUsername(),
+          password: configurationVault.getLdapPassword(),
+          issue,
+          comment: title
+        }
+      })
+
+      if (totalPassed === 1) {
+        console.log(`Spend time has been created with success on Redmine!`)
+      } else {
+        console.error(
+          'Failed to create spend time on Redmine! Please, check log above.'
+        )
+        console.info(
+          `Run: npm run spend-time --env issue=${issue},comment="${title}" to retry`
+        )
+      }
+      console.log(`You can see the video in: ${runs[0].video}`)
+    }
 
     console.log(stdout)
   } catch (error) {

@@ -6,7 +6,9 @@ export const CONFIGURATION_PROMPT_NAMES = {
   CONTACTS: 'addContacts',
   EMOJI_FORMAT: 'emojiFormat',
   SCOPE_PROMPT: 'scopePrompt',
-  SIGNED_COMMIT: 'signedCommit'
+  SIGNED_COMMIT: 'signedCommit',
+  LDAP_USERNAME: 'ldapUsername',
+  LDAP_PASSWORD: 'ldapPassword'
 }
 
 export const EMOJI_COMMIT_FORMATS = {
@@ -49,5 +51,17 @@ export default () => [
     message: 'Enable scope prompt',
     type: 'confirm',
     default: configurationVault.getScopePrompt()
+  },
+  {
+    name: CONFIGURATION_PROMPT_NAMES.LDAP_USERNAME,
+    message: 'Set your Redmine/Edesenv LDAP username',
+    type: 'input',
+    default: configurationVault.getLdapUsername()
+  },
+  {
+    name: CONFIGURATION_PROMPT_NAMES.LDAP_PASSWORD,
+    message: 'Set your Redmine/Edesenv LDAP password',
+    type: 'password',
+    default: configurationVault.getLdapPassword()
   }
 ]

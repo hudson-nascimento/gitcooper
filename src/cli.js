@@ -16,6 +16,7 @@ const cli = meow(
     --commit, -c    Interactively commit using the prompts
     --coAuthors,    Show option to add Co-Authors on commit. Works only with --commmit option
     --refs,         Show option to add Issue/PR reference on commit. Works only with --commmit option
+    --spendTime,    Create spend time registry on redmine
     --config, -g     Setup gitmoji-cli preferences.
     --init, -i      Initialize gitmoji as a commit hook
     --list, -l      List all the available gitmojis
@@ -39,7 +40,8 @@ const cli = meow(
       update: { type: 'boolean', alias: 'u' },
       version: { type: 'boolean', alias: 'v' },
       coAuthors: { type: 'boolean' },
-      refs: { type: 'boolean' }
+      refs: { type: 'boolean' },
+      spendTime: { type: 'boolean' }
     }
   }
 )

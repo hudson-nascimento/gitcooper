@@ -28,6 +28,14 @@ const setScopePrompt = (scopePrompt: boolean) => {
   config.set(CONFIGURATION_PROMPT_NAMES.SCOPE_PROMPT, scopePrompt)
 }
 
+const setLdapUsername = (username: string) => {
+  config.set(CONFIGURATION_PROMPT_NAMES.LDAP_USERNAME, username)
+}
+
+const setLdapPassword = (password: string) => {
+  config.set(CONFIGURATION_PROMPT_NAMES.LDAP_PASSWORD, password)
+}
+
 const getAutoAdd = (): boolean => {
   return config.get(CONFIGURATION_PROMPT_NAMES.AUTO_ADD) || false
 }
@@ -51,15 +59,27 @@ const getScopePrompt = (): boolean => {
   return config.get(CONFIGURATION_PROMPT_NAMES.SCOPE_PROMPT) || false
 }
 
+const getLdapUsername = (): string => {
+  return config.get(CONFIGURATION_PROMPT_NAMES.LDAP_USERNAME) || ''
+}
+
+const getLdapPassword = (): string => {
+  return config.get(CONFIGURATION_PROMPT_NAMES.LDAP_PASSWORD) || ''
+}
+
 export default {
   getAutoAdd,
   getContacts,
   getEmojiFormat,
   getScopePrompt,
   getSignedCommit,
+  getLdapPassword,
+  getLdapUsername,
   setAutoAdd,
   setContacts,
   setEmojiFormat,
   setScopePrompt,
-  setSignedCommit
+  setSignedCommit,
+  setLdapPassword,
+  setLdapUsername
 }
