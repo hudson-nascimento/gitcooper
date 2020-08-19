@@ -78,10 +78,22 @@ const withClient = async (answers: Answers) => {
       }
 
       console.log(`Creating spend time on Redmine for issue ${issue}...`)
+      const baseFolder = `${__dirname}/../../../../cypress`
+      const integrationFolder = `${baseFolder}/integration`
+      const videosFolder = `${baseFolder}/videos`
+      const pluginsFile = `${baseFolder}/plugins/index.js`
+      const supportFile = `${baseFolder}/support/index.js`
+
       const { totalPassed, runs } = await cypress.run({
         quiet: true,
-        spec: './cypress/integration/spend-time.spec.js',
+        spec: `${integrationFolder}/spend-time.spec.js`,
         configFile: false,
+        config: {
+          integrationFolder,
+          pluginsFile,
+          videosFolder,
+          supportFile
+        },
         env: {
           username: configurationVault.getLdapUsername(),
           password: configurationVault.getLdapPassword(),
