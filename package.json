@@ -21,7 +21,7 @@
     "coverage": "codecov",
     "test": "jest",
     "cy:run": "cypress run",
-    "spend-time": "npm run cy:run --spec \"cypress/integration/spend-time.spec.js\""
+    "spend-time": "yarn cy:run --spec \"cypress/integration/spend-time.spec.js\""
   },
   "repository": {
     "type": "git",
@@ -104,11 +104,5 @@
       "prettier --write src/**/*.js",
       "git add"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn run flow && yarn run test"
-    }
   }
 }
