@@ -48,7 +48,7 @@ const withClient = async (answers: Answers) => {
       cmdArgs = [...cmdArgs, '-m', answers.message]
     }
 
-    if (answers.refs) {
+    if (answers.refs && answers.refs != '0') {
       cmdArgs = [...cmdArgs, '-m', `Refs ${answers.refs}`]
     }
 
@@ -70,10 +70,10 @@ const withClient = async (answers: Answers) => {
     const { stdout } = await execa('git', cmdArgs)
 
     if (answers.spendTime) {
-      const issue = answers.refs ? answers.refs.replace('#', '') : ''
-      if (!issue.trim().length) {
+      const issue = answers.refs ? answers.refs.replace('#', '').trim() : ''
+      if (!issue.length) {
         throw new Error(
-          `No issue defined. Please, use the option --refs and type the issue number. E.g.: #1064. To create spend time registry manually run: npm run spend-time --env issue=${issue},comment="${title}"`
+          `No issue defined. Please, use the option --refs and type the issue number. E.g.: #1064, or 0 (For last updated task in execution). To create spend time registry manually run: npm run spend-time --env issue=${issue},comment="${title}"`
         )
       }
 
