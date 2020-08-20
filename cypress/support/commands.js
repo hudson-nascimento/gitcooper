@@ -41,7 +41,7 @@ Cypress.Commands.add('newTimeEntry', (issue, hours, comment) => {
         cy._newTimeEntry(lastUpdatedIssueInExecution, hours, comment)
       })
   } else {
-    cy._newTimeEntry(lastUpdatedIssueInExecution, hours, comment)
+    cy._newTimeEntry(issue, hours, comment)
   }
 })
 

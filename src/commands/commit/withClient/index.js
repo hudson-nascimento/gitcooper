@@ -83,6 +83,7 @@ const withClient = async (answers: Answers) => {
       const videosFolder = `${baseFolder}/videos`
       const pluginsFile = `${baseFolder}/plugins/index.js`
       const supportFile = `${baseFolder}/support/index.js`
+      // TODO: Screenshots folder
 
       const { totalPassed, runs } = await cypress.run({
         quiet: true,
