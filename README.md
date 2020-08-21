@@ -1,48 +1,40 @@
-# gitmoji-cli
+# Git Cooper CLI
 
-[![Travis Build Status](https://img.shields.io/travis/com/carloscuesta/gitmoji-cli/master?style=flat-square)](https://travis-ci.com/carloscuesta/gitmoji-cli)
-[![Code Climate](https://img.shields.io/codeclimate/maintainability/carloscuesta/gitmoji-cli.svg?style=flat-square)](https://codeclimate.com/github/carloscuesta/gitmoji-cli)
-[![Codecov](https://img.shields.io/codecov/c/github/carloscuesta/gitmoji-cli.svg?style=flat-square)](https://github.com/carloscuesta/gitmoji-cli)
-[![David Dependencies](https://img.shields.io/david/carloscuesta/gitmoji-cli.svg?style=flat-square)](https://david-dm.org/carloscuesta/gitmoji-cli)
-[![npm version](https://img.shields.io/npm/v/gitmoji-cli.svg?style=flat-square)](https://www.npmjs.com/package/gitmoji-cli)
-[![npm downloads](https://img.shields.io/npm/dt/gitmoji-cli.svg?style=flat-square)](https://www.npmjs.com/package/gitmoji-cli)
-[![gitmoji badge](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square)](https://github.com/carloscuesta/gitmoji)
-
-![gitmoji-cli](https://cloud.githubusercontent.com/assets/7629661/20454643/11eb9e40-ae47-11e6-90db-a1ad8a87b495.gif)
-
-> A [gitmoji](https://github.com/carloscuesta/gitmoji) interactive client for using gitmojis on commit messages.
+> A [gitmoji](https://github.com/carloscuesta/gitmoji) interactive client for using gitmojis on commit messages plus Redmine integration.
 
 ## About
 
-This project provides an easy solution for using [**gitmoji**](https://github.com/carloscuesta/gitmoji) from your command line. Gitmoji-cli solves the hassle of searching through the gitmoji list. Includes a bunch of options you can play with! :tada:
+This project is a fork of great package [gitmoji-cli](https://github.com/carloscuesta/gitmoji) (commit convention on FSD). GitCooper-cli has all gitmoji features adding some new features:
+
+- Co-Authors contacts (For collaborative teams)
+- Redmine integration (
+  - Create time entries without automatically to you follow your normal development flow!
+  - Finish issue adding one option on command (TODO)
 
 ## Install
 
-```bash
-$ npm i -g gitmoji-cli
-```
+TODO
 
 ## Usage
 
 ```bash
-$ gitmoji --help
+gitcooper --help
 ```
 
 ```
-A gitmoji interactive client for using gitmojis on commit messages.
+The Coopersystem interactive client for create your commits.
 
   Usage
-    $ gitmoji
+    $ gitmocooper
   Options
-    --init, -i      Initialize gitmoji as a commit hook
-    --remove, -r    Remove a previously initialized commit hook
-    --config, -g     Setup gitmoji-cli preferences.
+    --config, -g     Setup gitcooper-cli preferences.
     --commit, -c    Interactively commit using the prompts
     --coAuthors,    Show option to add Co-Authors on commit. Works only with --commmit option
-    --refs,         Show option to add Issue/PR reference on commit. Works only with --commmit option
+    --refs,         Show option to add issue on commit. Works only with --commmit option
+    --timeEntry,    Create a time entry registry on redmine
     --list, -l      List all the available gitmojis
     --search, -s    Search gitmojis
-    --version, -v   Print gitmoji-cli installed version
+    --version, -v   Print gitcooper-cli installed version
     --update, -u    Sync emoji list with the repo
 ```
 
@@ -55,7 +47,7 @@ You can use the commit functionality in two ways, directly or via a commit-hook.
 Start the interactive commit client, to auto generate your commit based on your prompts.
 
 ```bash
-$ gitmoji -c
+gitcooper -c
 ```
 
 The client has the options `--coAuthors` and `--refs`.
@@ -88,29 +80,21 @@ Now you can use the contacts on `Co-authors` option.
 Allow to add commit Issue/PR reference:
 
 ```
-? Issue / PR reference: #123 !321
+? Issue reference: #123 !321
 ```
 
-#### Hook
+##### Time entry
 
-Run the init option, add your changes and commit them, after that the prompts will begin and your commit message will be built.
+Add time entry on redmine for issue defined on `--refs` option. If `--refs` option is not passed, the last updated issue in execution will be used to create time entry.
 
-```bash
-$ gitmoji -i
-$ git add .
-$ git commit
-```
-
-⚠️ The hook **should not be used** with the `gitmoji -c` command.
-
-![gitmoji commit](https://user-images.githubusercontent.com/7629661/41189947-1de56124-6bd6-11e8-9567-e7f1a8e99500.png)
+IMPORTANT: You must defined your LDAP credentials using `gitcooper -g` option.
 
 ### Search
 
 Search using specific keywords to find the right gitmoji.
 
 ```bash
-$ gitmoji bug linter -s
+gitcooper bug linter -s
 ```
 
 ![gitmoji list](https://user-images.githubusercontent.com/7629661/41189878-d24a3b78-6bd4-11e8-8d47-c8edf3b87e53.png)
@@ -120,7 +104,7 @@ $ gitmoji bug linter -s
 Pretty print all the available gitmojis.
 
 ```bash
-$ gitmoji -l
+gitcooper -l
 ```
 
 ![gitmoji list](https://user-images.githubusercontent.com/7629661/41189877-d22b145a-6bd4-11e8-97f8-a8e36bcab062.png)
@@ -130,11 +114,11 @@ $ gitmoji -l
 Update the gitmojis list, by default the first time you run gitmoji, the cli creates a cache to allow using this tool without internet connection.
 
 ```bash
-$ gitmoji -u
+gitcooper -u
 ```
 
 ### Config
 
-Run `gitmoji -g` to setup some gitmoji-cli preferences, such as the auto `git add .` feature.
+Run `gitcooper -g` to setup some gitcooper-cli preferences, such as the auto `git add .` feature.
 
 ![gitmoji config](https://user-images.githubusercontent.com/7629661/41189876-d21167ee-6bd4-11e8-9008-4c987502f307.png)
