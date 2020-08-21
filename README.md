@@ -1,23 +1,58 @@
-# Git Cooper CLI
+# GitCooper CLI
 
-> A [gitmoji](https://github.com/carloscuesta/gitmoji) interactive client for using gitmojis on commit messages plus Redmine integration.
+> A [gitmoji](https://github.com/carloscuesta/gitmoji) interactive client for using gitmojis on commit messages plus Redmine integration personalized for Coopersystem.
 
 ## About
 
 This project is a fork of great package [gitmoji-cli](https://github.com/carloscuesta/gitmoji) (commit convention on FSD). GitCooper-cli has all gitmoji features adding some new features:
 
 - Co-Authors contacts (For collaborative teams)
-- Redmine integration (
+- Redmine integration
   - Create time entries without automatically to you follow your normal development flow!
   - Finish issue adding one option on command (TODO)
 
 ## Install
 
-TODO
+Clone the project in your preferred folder. E.g.:
+
+```sh
+cd ~/Projects
+git clone http://git.coopersystem.com.br/fabrica/gitcooper-cli.git
+cd gitcooper-cli
+```
+
+Install dependencies and create a build:
+
+```sh
+$ yarn install
+$ yarn build
+```
+
+Create an alias in your `bash` or `zsh` appointing to built files. E.g.:
+
+```sh
+$ nano ~/.zshrc
+
+# ... Other configs, alias, etc
+
+alias gitcooper="~/Projects/gitcooper-cli/lib/cli.js"
+```
+
+Restart your shell:
+
+```sh
+$ zsh
+```
+
+### Configuring
+
+Run `gitcooper -g` and answer the prompts.
+
+**IMPORTANT:** Set your LDAP username and password to integration with Readmine works fine.
 
 ## Usage
 
-```bash
+```sh
 gitcooper --help
 ```
 
@@ -25,7 +60,7 @@ gitcooper --help
 The Coopersystem interactive client for create your commits.
 
   Usage
-    $ gitmocooper
+    $ gitcooper
   Options
     --config, -g     Setup gitcooper-cli preferences.
     --commit, -c    Interactively commit using the prompts

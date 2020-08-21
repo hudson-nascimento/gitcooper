@@ -1,19 +1,19 @@
 {
-  "name": "gitmoji-cli",
-  "version": "3.2.6",
-  "description": "A gitmoji client for using emojis on commit messages.",
+  "name": "gitcooper-cli",
+  "version": "0.1.0",
+  "description": "A gitmoji client for using emojis on commit messages personalized for Coopersystem.",
   "engines": {
     "node": ">=10"
   },
   "bin": {
-    "gitmoji": "lib/cli.js"
+    "gitcooper": "lib/cli.js"
   },
   "files": [
     "lib"
   ],
   "scripts": {
     "build": "babel src -d lib",
-    "package": "pkg . --output ./bin/gitmoji --targets latest-linux-x64,latest-macos-x64,latest-win-x64",
+    "package": "pkg . --output ./bin/gitcooper --targets latest-linux-x64,latest-macos-x64,latest-win-x64",
     "clean": "rm -rf lib",
     "flow": "flow",
     "lint": "prettier --check src/**/*.js",
@@ -25,20 +25,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/carloscuesta/gitmoji-cli.git"
+    "url": "git+http://git.coopersystem.com.br/fabrica/gitcooper-cli.git"
   },
   "keywords": [
     "gitmoji",
+    "redmine",
     "emoji",
-    "carloscuesta",
     "commit"
   ],
   "author": "Carlos Cuesta",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/carloscuesta/gitmoji-cli/issues"
-  },
-  "homepage": "https://github.com/carloscuesta/gitmoji-cli#readme",
   "dependencies": {
     "chalk": "^4.1.0",
     "conf": "^7.0.1",
