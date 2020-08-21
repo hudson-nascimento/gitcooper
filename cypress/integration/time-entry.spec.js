@@ -44,6 +44,8 @@ context('Actions', () => {
     const comment = Cypress.env('comment') ?? ''
     const sandbox = Cypress.env('sandbox') ?? false
 
+    cy.log('Sand', sandbox)
+
     if (!issue) {
       throw new Error('Env var "issue" is required')
     }
@@ -70,7 +72,11 @@ context('Actions', () => {
           // Get last task worked hours
           const issueWorkedHours = totalWorkedHours - registeredWorkedHours
 
-          cy.newTimeEntry(issue, issueWorkedHours, comment)
+          if (issueWorkedHours.toFixed(2) == 0.0) {
+            throw new Error("It's over for today! See you tomorrow ;)")
+          }
+
+          cy.newTimeEntry(issue, issueWorkedHours, comment, sandbox)
         })
       })
   })

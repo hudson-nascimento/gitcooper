@@ -12,7 +12,7 @@ Cypress.Commands.add('loginEdesenv', (username, password) => {
   cy.get('#login-submit').click()
 })
 
-Cypress.Commands.add('_newTimeEntry', (issue, hours, comment) => {
+Cypress.Commands.add('_newTimeEntry', (issue, hours, comment, sandbox) => {
   cy.visit(
     `http://redmine.coopersystem.com.br/issues/${issue}/time_entries/new`
   )
@@ -22,8 +22,10 @@ Cypress.Commands.add('_newTimeEntry', (issue, hours, comment) => {
     cy.get('#time_entry_comments').type(comment.trim())
   }
 
-  // CAUTION: It'll really create a new registry on redmine!!!
-  // cy.get('input[name="commit"]').click()
+  cy.log('Sand box', sandbox)
+  if (!sandbox) {
+    cy.get('input[name="commit"]').click()
+  }
 })
 
 Cypress.Commands.add('findLastUpdatedIssuesInExecution', () => {
@@ -32,16 +34,16 @@ Cypress.Commands.add('findLastUpdatedIssuesInExecution', () => {
   )
 })
 
-Cypress.Commands.add('newTimeEntry', (issue, hours, comment) => {
+Cypress.Commands.add('newTimeEntry', (issue, hours, comment, sandbox) => {
   if (issue == '0') {
     cy.findLastUpdatedIssuesInExecution()
     cy.get('.id:first')
       .invoke('text')
       .then((lastUpdatedIssueInExecution) => {
-        cy._newTimeEntry(lastUpdatedIssueInExecution, hours, comment)
+        cy._newTimeEntry(lastUpdatedIssueInExecution, hours, comment, sandbox)
       })
   } else {
-    cy._newTimeEntry(issue, hours, comment)
+    cy._newTimeEntry(issue, hours, comment, sandbox)
   }
 })
 

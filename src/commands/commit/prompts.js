@@ -24,13 +24,15 @@ export type Answers = {
   message: string,
   refs: string,
   coAuthors: string,
-  spendTime: boolean
+  timeEntry: boolean,
+  sandbox?: boolean
 }
 
 export type Options = {
   refs: boolean,
   coAuthors: boolean,
-  spendTime: boolean
+  timeEntry: boolean,
+  sandbox?: boolean
 }
 
 export default (gitmojis: Array<Gitmoji>, options: Options): Array<Object> => [
@@ -73,7 +75,7 @@ export default (gitmojis: Array<Gitmoji>, options: Options): Array<Object> => [
     ? [
         {
           name: 'refs',
-          message: 'Issue / PR reference:',
+          message: 'Issue reference:',
           filter: filter.refs
         }
       ]
@@ -88,13 +90,23 @@ export default (gitmojis: Array<Gitmoji>, options: Options): Array<Object> => [
         }
       ]
     : []),
-  ...((options && options.spendTime) || false
+  ...((options && options.timeEntry) || false
     ? [
         {
-          name: 'spendTime',
+          name: 'timeEntry',
           type: 'confirm',
           default: true,
-          message: 'Should create spend time registry on Redmine?:'
+          message: 'Create time entry on Redmine?:'
+        }
+      ]
+    : []),
+  ...((options && options.sandbox) || false
+    ? [
+        {
+          name: 'sandbox',
+          type: 'confirm',
+          default: true,
+          message: 'Use sandbox?:'
         }
       ]
     : [])

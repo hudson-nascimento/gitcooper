@@ -67,56 +67,66 @@ const withClient = async (answers: Answers) => {
       }
     }
 
-    const { stdout } = await execa('git', cmdArgs)
+    if (answers.timeEntry) {
+      const issue = answers.refs ? answers.refs.replace('#', '').trim() : '0'
 
-    if (answers.spendTime) {
-      const issue = answers.refs ? answers.refs.replace('#', '').trim() : ''
-      if (!issue.length) {
-        throw new Error(
-          `No issue defined. Please, use the option --refs and type the issue number. E.g.: #1064, or 0 (For last updated task in execution). To create spend time registry manually run: npm run spend-time --env issue=${issue},comment="${title}"`
+      if (issue != '0') {
+        console.log(`Creating time entry on Redmine for issue ${issue}...`)
+      } else {
+        console.log(
+          `Creating time entry on Redmine for last updated issue in execution...`
         )
       }
 
-      console.log(`Creating spend time on Redmine for issue ${issue}...`)
       const baseFolder = `${__dirname}/../../../../cypress`
       const integrationFolder = `${baseFolder}/integration`
       const videosFolder = `${baseFolder}/videos`
       const pluginsFile = `${baseFolder}/plugins/index.js`
       const supportFile = `${baseFolder}/support/index.js`
-      // TODO: Screenshots folder
+      const screenshotsFolder = `${baseFolder}/screenshots`
 
       const { totalPassed, runs } = await cypress.run({
         quiet: true,
-        spec: `${integrationFolder}/spend-time.spec.js`,
+        spec: `${integrationFolder}/time-entry.spec.js`,
         configFile: false,
         config: {
           integrationFolder,
           pluginsFile,
           videosFolder,
-          supportFile
+          supportFile,
+          screenshotsFolder
         },
         env: {
           username: configurationVault.getLdapUsername(),
           password: configurationVault.getLdapPassword(),
           issue,
-          comment: title
+          comment: title,
+          sandbox: answers.sandbox
         }
       })
 
+      // TODO: Get issue from redmine if refs option is equals to "0"
+
       if (totalPassed === 1) {
-        console.log(`Spend time has been created with success on Redmine!`)
+        console.log(`Time entry has been created with success on Redmine!`)
       } else {
         console.error(
-          'Failed to create spend time on Redmine! Please, check log above.'
+          'Failed to create time entry on Redmine! Please, check log above.'
         )
         console.info(
-          `Run: npm run spend-time --env issue=${issue},comment="${title}" to retry`
+          `Run: yarn time-entry --env issue=${issue},comment="${title}" to retry`
         )
       }
       console.log(`You can see the video in: ${runs[0].video}`)
     }
 
-    console.log(stdout)
+    if (!answers.sandbox) {
+      const { stdout } = await execa('git', cmdArgs)
+
+      console.log(stdout)
+    } else {
+      console.log(`Sandbox: git ${cmdArgs.join(' ')}`)
+    }
   } catch (error) {
     console.error(error)
   }

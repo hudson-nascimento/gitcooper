@@ -11,22 +11,18 @@ updateNotifier({ pkg }).notify()
 const cli = meow(
   `
   Usage
-    $ gitmoji
+    $ gitcooper
   Options
+    --config, -g     Setup gitcooper-cli preferences.
     --commit, -c    Interactively commit using the prompts
     --coAuthors,    Show option to add Co-Authors on commit. Works only with --commmit option
-    --refs,         Show option to add Issue/PR reference on commit. Works only with --commmit option
-    --spendTime,    Create spend time registry on redmine
-    --config, -g     Setup gitmoji-cli preferences.
-    --init, -i      Initialize gitmoji as a commit hook
+    --refs,         Show option to add issue on commit. Works only with --commmit option
+    --timeEntry,    Create a time entry registry on redmine
+    --sandbox,      Don't really create the time entry on redmine
     --list, -l      List all the available gitmojis
-    --remove, -r    Remove a previously initialized commit hook
     --search, -s    Search gitmojis
+    --version, -v   Print gitcooper-cli installed version
     --update, -u    Sync emoji list with the repo
-    --version, -v   Print gitmoji-cli installed version
-  Examples
-    $ gitmoji -l
-    $ gitmoji bug linter -s
 `,
   {
     flags: {
@@ -41,7 +37,8 @@ const cli = meow(
       version: { type: 'boolean', alias: 'v' },
       coAuthors: { type: 'boolean' },
       refs: { type: 'boolean' },
-      spendTime: { type: 'boolean' }
+      timeEntry: { type: 'boolean' },
+      sandbox: { type: 'boolean' }
     }
   }
 )
