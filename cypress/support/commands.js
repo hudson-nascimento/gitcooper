@@ -32,16 +32,24 @@ Cypress.Commands.add('findLastUpdatedIssuesInExecution', () => {
   cy.visit(
     'http://redmine.coopersystem.com.br/issues?utf8=%E2%9C%93&set_filter=1&sort=updated_on%3Adesc&f%5B%5D=status_id&op%5Bstatus_id%5D=%3D&v%5Bstatus_id%5D%5B%5D=3&f%5B%5D=assigned_to_id&op%5Bassigned_to_id%5D=%3D&v%5Bassigned_to_id%5D%5B%5D=me&f%5B%5D=&c%5B%5D=project&c%5B%5D=cf_6&c%5B%5D=parent&c%5B%5D=subject&c%5B%5D=status&c%5B%5D=updated_on&group_by=&t%5B%5D='
   )
+  cy.get('body').then(($body) => {
+    if ($body.find('.nodata').length > 0) {
+      throw new Error(
+        'Issue not defined and has no one issue in execution! Use the param --refs or put an issue in execution.'
+      )
+    }
+  })
+
+  cy.get('.id:first').invoke('text')
 })
 
 Cypress.Commands.add('newTimeEntry', (issue, hours, comment, sandbox) => {
-  if (issue == '0') {
-    cy.findLastUpdatedIssuesInExecution()
-    cy.get('.id:first')
-      .invoke('text')
-      .then((lastUpdatedIssueInExecution) => {
+  if (!issue) {
+    cy.findLastUpdatedIssuesInExecution().then(
+      (lastUpdatedIssueInExecution) => {
         cy._newTimeEntry(lastUpdatedIssueInExecution, hours, comment, sandbox)
-      })
+      }
+    )
   } else {
     cy._newTimeEntry(issue, hours, comment, sandbox)
   }

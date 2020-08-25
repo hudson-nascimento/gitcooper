@@ -44,12 +44,6 @@ context('Actions', () => {
     const comment = Cypress.env('comment') ?? ''
     const sandbox = Cypress.env('sandbox') ?? false
 
-    cy.log('Sand', sandbox)
-
-    if (!issue) {
-      throw new Error('Env var "issue" is required')
-    }
-
     // Login on edesenv to get total worked hours in day
     cy.loginEdesenv(username, password)
 

@@ -68,9 +68,9 @@ const withClient = async (answers: Answers) => {
     }
 
     if (answers.timeEntry) {
-      const issue = answers.refs ? answers.refs.replace('#', '').trim() : '0'
+      const issue = answers.refs ? answers.refs.replace('#', '').trim() : null
 
-      if (issue != '0') {
+      if (issue) {
         console.log(`Creating time entry on Redmine for issue ${issue}...`)
       } else {
         console.log(
