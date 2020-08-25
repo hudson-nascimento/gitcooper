@@ -17,8 +17,8 @@ Clone the project in your preferred folder. E.g.:
 
 ```sh
 cd ~/Projects
-git clone http://git.coopersystem.com.br/fabrica/gitcooper-cli.git
-cd gitcooper-cli
+git clone git@github.com:coopersystem-fsd/gitcooper.git
+cd gitcooper
 ```
 
 Install dependencies and create a build:
@@ -35,7 +35,7 @@ $ nano ~/.zshrc
 
 # ... Other configs, alias, etc
 
-alias gitcooper="~/Projects/gitcooper-cli/lib/cli.js"
+alias gitcooper="~/Projects/gitcooper/lib/cli.js"
 ```
 
 Restart your shell:
