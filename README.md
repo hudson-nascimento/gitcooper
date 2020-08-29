@@ -13,35 +13,10 @@ This project is a fork of great package [gitmoji-cli](https://github.com/carlosc
 
 ## Install
 
-Clone the project in your preferred folder. E.g.:
+Install package via `npm`
 
 ```sh
-cd ~/Projects
-git clone git@github.com:coopersystem-fsd/gitcooper.git
-cd gitcooper
-```
-
-Install dependencies and create a build:
-
-```sh
-$ yarn install
-$ yarn build
-```
-
-Create an alias in your `bash` or `zsh` appointing to built files. E.g.:
-
-```sh
-$ nano ~/.zshrc
-
-# ... Other configs, alias, etc
-
-alias gitcooper="~/Projects/gitcooper/lib/cli.js"
-```
-
-Restart your shell:
-
-```sh
-$ zsh
+npm i -g @coopersystem-fsd/gitcooper-cli
 ```
 
 ### Configuring
