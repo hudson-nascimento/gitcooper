@@ -78,7 +78,7 @@ const withClient = async (answers: Answers) => {
         )
       }
 
-      const baseFolder = `${__dirname}/../../../../cypress`
+      const baseFolder = `${__dirname}/../../../cypress`
       const integrationFolder = `${baseFolder}/integration`
       const videosFolder = `${baseFolder}/videos`
       const pluginsFile = `${baseFolder}/plugins/index.js`
