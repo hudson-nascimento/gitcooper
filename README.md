@@ -11,7 +11,7 @@ This project is a fork of great package [gitmoji-cli](https://github.com/carlosc
   - Create time entries without automatically to you follow your normal development flow!
   - Finish issue adding one option on command (TODO)
 
-## Install
+## Installing
 
 Install package via `npm`
 
@@ -19,7 +19,7 @@ Install package via `npm`
 npm i -g @coopersystem-fsd/gitcooper-cli
 ```
 
-### Configuring
+## Configuring
 
 Run `gitcooper -g` and answer the prompts.
 
@@ -27,9 +27,27 @@ Run `gitcooper -g` and answer the prompts.
 
 ## Usage
 
+### Example
+
+To commit and create a time entry on redime just run (Don't forget add to be commit with `git add`):
+
+```sh
+gitcooper -c --timeEntry
+```
+
+IMPORTANT: For this to work fine you must have an issue in execution on Redmine. Alternatively you can pass the option `--refs` and put your redmine issue number on prompt. E.g.:
+
+```sh
+gitcooper -c --timeEntry --refs
+// Another questions...
+? Issue reference: 123
+```
+
 ```sh
 gitcooper --help
 ```
+
+## Comannds
 
 ```
 The Coopersystem interactive client for create your commits.
