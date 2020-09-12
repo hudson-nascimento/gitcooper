@@ -18,6 +18,18 @@ export const EMOJI_COMMIT_FORMATS = {
 
 export default () => [
   {
+    name: CONFIGURATION_PROMPT_NAMES.LDAP_USERNAME,
+    message: 'Set your Redmine/Edesenv LDAP username',
+    type: 'input',
+    default: configurationVault.getLdapUsername()
+  },
+  {
+    name: CONFIGURATION_PROMPT_NAMES.LDAP_PASSWORD,
+    message: 'Set your Redmine/Edesenv LDAP password',
+    type: 'password',
+    default: configurationVault.getLdapPassword()
+  },
+  {
     name: CONFIGURATION_PROMPT_NAMES.CONTACTS,
     message:
       'Co-authors contacts definitions. E.g.: @ContactId: Name <email@domain.com>',
@@ -51,17 +63,5 @@ export default () => [
     message: 'Enable scope prompt',
     type: 'confirm',
     default: configurationVault.getScopePrompt()
-  },
-  {
-    name: CONFIGURATION_PROMPT_NAMES.LDAP_USERNAME,
-    message: 'Set your Redmine/Edesenv LDAP username',
-    type: 'input',
-    default: configurationVault.getLdapUsername()
-  },
-  {
-    name: CONFIGURATION_PROMPT_NAMES.LDAP_PASSWORD,
-    message: 'Set your Redmine/Edesenv LDAP password',
-    type: 'password',
-    default: configurationVault.getLdapPassword()
   }
 ]
