@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+import format from 'date-fns/format'
 
 function timeToHours(time) {
   const [hours, minutes] = time.split(':')
@@ -41,8 +42,10 @@ context('Actions', () => {
     const username = Cypress.env('username')
     const password = Cypress.env('password')
     const issue = Cypress.env('issue')
-    const comment = Cypress.env('comment') ?? ''
+    const comments = Cypress.env('comment') ?? ''
     const sandbox = Cypress.env('sandbox') ?? false
+
+    cy.log('Running in sandbox', sandbox)
 
     // Login on edesenv to get total worked hours in day
     cy.loginEdesenv(username, password)
@@ -57,20 +60,60 @@ context('Actions', () => {
         // Login on redmine
         cy.loginRedmine(username, password)
 
-        cy.findRegisteredWorkedHours().then((text) => {
-          const [registeredWorkedHours] = text.match(/[0-9]{1,2}.[0-9]{1,2}/gm)
+        const today = format(new Date(), 'yyyy-MM-d')
+
+        cy.request({
+          method: 'GET',
+          url: `http://redmine.coopersystem.com.br/time_entries.json`,
+          auth: {
+            username,
+            password
+          },
+          qs: {
+            user_id: 'me',
+            from: today,
+            to: today,
+            limit: 100
+          }
+        }).then((response) => {
+          const registeredWorkedHours = response.body.time_entries.reduce(
+            (n, { hours }) => n + hours,
+            0
+          )
 
           cy.log('totalWorkedHours', totalWorkedHours)
           cy.log('registeredWorkedHours', registeredWorkedHours)
 
-          // Get last task worked hours
           const issueWorkedHours = totalWorkedHours - registeredWorkedHours
+
+          cy.log('issueWorkedHours', issueWorkedHours)
 
           if (issueWorkedHours.toFixed(2) == 0.0) {
             throw new Error("It's over for today! See you tomorrow ;)")
           }
 
-          cy.newTimeEntry(issue, issueWorkedHours, comment, sandbox)
+          if (!sandbox) {
+            cy.request({
+              method: 'POST',
+              url: `http://redmine.coopersystem.com.br/time_entries.json`,
+              auth: {
+                username,
+                password
+              },
+              body: {
+                time_entry: {
+                  issue_id: issue,
+                  hours: issueWorkedHours,
+                  comments: comments,
+                  spent_on: today
+                }
+              }
+            }).then((response) => {
+              expect(response.body).to.have.property('time_entry')
+            })
+          } else {
+            cy.log(`Create time entry for issue ${issue}!`)
+          }
         })
       })
   })
