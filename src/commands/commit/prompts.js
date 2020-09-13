@@ -1,5 +1,6 @@
 // @flow
 import inquirer from 'inquirer'
+import { IssueStatus } from '../../services/redmine'
 
 import configurationVault from '../../utils/configurationVault'
 import filterGitmojis from '../../utils/filterGitmojis'
@@ -9,19 +10,6 @@ import guard from './guard'
 const TITLE_MAX_LENGTH_COUNT: number = 48
 
 inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'))
-
-export const IssueStatus = {
-  PAUSED: 10,
-  FINISHED: 11,
-  HOMOLOG: 5,
-  EXECUTING: 3
-}
-
-export const IssueStatusLabel = {
-  [IssueStatus.FINISHED]: 'Concluída',
-  [IssueStatus.PAUSED]: 'Pausada',
-  [IssueStatus.HOMOLOG]: 'Em Homologação'
-}
 
 export type Gitmoji = {
   code: string,
