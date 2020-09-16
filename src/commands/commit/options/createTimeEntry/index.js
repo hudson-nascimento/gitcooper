@@ -8,6 +8,15 @@ export default async function(issue: number, comments: string) {
 
   const issueWorkedHours = workedHours - registeredWorkedHours
 
+  console.log('Worked hours today:', workedHours)
+  console.log('Registered worked hours:', registeredWorkedHours)
+
+  if (issueWorkedHours < 0) {
+    throw new Error(
+      'Your time entries on Redmine are greater than your worked hours! Cannot determine issue worked hours. :('
+    )
+  }
+
   if (parseFloat(issueWorkedHours.toFixed(2)) === 0.0) {
     throw new Error("It's over for today! See you tomorrow ;)")
   }
