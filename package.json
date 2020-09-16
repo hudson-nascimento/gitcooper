@@ -39,6 +39,7 @@
     "url": "https://github.com/coopersystem-fsd/gitcooper/issues"
   },
   "dependencies": {
+    "@smartinsf/redmine-client": "^0.2.0",
     "axios": "^0.20.0",
     "axios-cookiejar-support": "^1.0.0",
     "chalk": "^4.1.0",

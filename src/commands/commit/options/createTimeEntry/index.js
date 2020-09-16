@@ -3,6 +3,7 @@ import * as redmine from '../../../../services/redmine'
 
 export default async function(issue: number, comments: string) {
   const workedHours = await edesenv.getWorkedHoursToday()
+
   const registeredWorkedHours = await redmine.getRegisteredWorkedHours()
 
   const issueWorkedHours = workedHours - registeredWorkedHours

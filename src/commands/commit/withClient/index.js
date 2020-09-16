@@ -80,7 +80,7 @@ const withClient = async (answers: Answers) => {
 
     let issue = answers.refs ? answers.refs.replace('#', '').trim() : ''
     if (!issue) {
-      issue = redmine.getLastIssueInExecution()
+      issue = await redmine.getLastIssueInExecution()
     }
 
     if (answers.timeEntry) {
@@ -106,12 +106,10 @@ const withClient = async (answers: Answers) => {
 
       try {
         if (!answers.sandbox) {
-          const updated = await updateIssueStatus(issue, newStatus)
-          if (updated) {
-            console.log('Status change with success')
-          }
+          await updateIssueStatus(issue, newStatus)
+
+          console.log('Status changed with success!')
         }
-        console.log(`Status changed with success!`)
       } catch (err) {
         console.log(
           chalk.red(

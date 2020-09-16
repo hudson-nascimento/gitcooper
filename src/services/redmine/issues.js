@@ -1,4 +1,4 @@
-import api from "./api";
+import redmine from './client'
 
 export const IssueStatus = {
   PAUSED: 10,
@@ -14,35 +14,24 @@ export const IssueStatusLabel = {
 }
 
 export async function getLastIssueInExecution() {
-  const {
-    data: { issues }
-  } = await api.get<{ issues: { id: number }[] }>(
-    'issues.json',
-    {
-      params: {
-        assigned_to_id: 'me',
-        status_id: IssueStatus.EXECUTING,
-        sort: 'updated_on:desc',
-        limit: 1
-      }
-    }
-  )
+  const { issues } = await redmine.issues().list({
+    asignedToId: 'me',
+    statusId: IssueStatus.EXECUTING,
+    sort: 'updated_on:desc',
+    limit: 1
+  })
 
-  const [issue] = issues;
+  const [issue] = issues
 
   if (!issue) {
     throw new Error('Not found an issue in execution')
   }
 
-  return issue.id;
+  return issue.id
 }
 
 export async function updateIssueStatus(issue: number, status: number) {
-  const response = await api.put(`issues/${issue}.json`, {
-    issue: {
-      status_id: status
-    }
+  return redmine.issues().update(issue, {
+    statusId: status
   })
-
-  return response.status === 200;
 }
