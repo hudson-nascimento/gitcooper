@@ -1102,10 +1102,10 @@
   dependencies:
     type-detect "4.0.8"
 
-"@smartinsf/redmine-client@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@smartinsf/redmine-client/-/redmine-client-0.2.0.tgz#6501faa4f1d41144684f397ecae9ad02efbe3999"
-  integrity sha512-Zz+D8qeqGL1q3cg0Jh9bODNmuPvGUgW75EF69W17naTKmU1f3rkTN4FfupgJ1SiKaDrTJmAPkzuBqwm2QiUgOg==
+"@smartinsf/redmine-client@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@smartinsf/redmine-client/-/redmine-client-0.2.1.tgz#2f952b7033bc82d1fafe322dad3d0c20b636a217"
+  integrity sha512-/aLZZ831rJZBa78m45/2FcLVrDyTgTzzVKTRY0IMmrNM+RdlgHAE8TpRhp0oJsb9VFpSemP6oXpHv8xnAwqHNA==
   dependencies:
     axios "^0.20.0"
     date-fns "^2.16.1"

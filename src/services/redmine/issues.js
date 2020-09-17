@@ -1,3 +1,4 @@
+// @flow
 import redmine from './client'
 
 export const IssueStatus = {
@@ -15,7 +16,7 @@ export const IssueStatusLabel = {
 
 export async function getLastIssueInExecution() {
   const { issues } = await redmine.issues().list({
-    asignedToId: 'me',
+    assignedToId: 'me',
     statusId: IssueStatus.EXECUTING,
     sort: 'updated_on:desc',
     limit: 1

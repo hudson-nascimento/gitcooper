@@ -81,6 +81,11 @@ const withClient = async (answers: Answers) => {
     let issue = answers.refs ? answers.refs.replace('#', '').trim() : ''
     if (!issue) {
       issue = await redmine.getLastIssueInExecution()
+      console.log(
+        chalk.yellow(
+          `\nNo one issue defined on "--refs" command. I'll use the last issue in execution: ${issue}\n`
+        )
+      )
     }
 
     if (answers.timeEntry) {
