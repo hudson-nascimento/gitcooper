@@ -109,7 +109,7 @@ Array [
       },
       Object {
         "filter": [Function],
-        "message": "Issue / PR reference:",
+        "message": "Issue reference:",
         "name": "refs",
       },
       Object {
@@ -193,7 +193,7 @@ Array [
       },
       Object {
         "filter": [Function],
-        "message": "Issue / PR reference:",
+        "message": "Issue reference:",
         "name": "refs",
       },
       Object {

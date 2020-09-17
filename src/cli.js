@@ -19,7 +19,6 @@ const cli = meow(
     --refs,         Show option to add issue on commit. Works only with --commmit option
     --timeEntry,    Create a time entry registry on redmine
     --changeStatus  Show options to change issue status after commit
-    --sandbox,      Don't really create the time entry on redmine
     --list, -l      List all the available gitmojis
     --search, -s    Search gitmojis
     --version, -v   Print gitcooper-cli installed version
