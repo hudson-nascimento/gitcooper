@@ -45,6 +45,19 @@ export const clientCommitAnswersWithScopeAndOptions = {
   coAuthors: '@A,   Foo Bar <foo.bar@mail.com>,@B,@C'
 }
 
+export const clientCommitAnswersWithoutRefsWithTimeEntryAndNewStatus = {
+  ...clientCommitAnswers,
+  timeEntry: true,
+  newStatus: 1
+}
+
+export const clientCommitAnswersWithRefsWithTimeEntryAndNewStatus = {
+  ...clientCommitAnswers,
+  refs: '321',
+  timeEntry: true,
+  newStatus: 1
+}
+
 export const clientCommitRefsMounted = 'Refs #123'
 export const clientCommitCoAuthorsMounted =
   'Co-authored-by: A B <a@b.com>\nCo-authored-by: Foo Bar <foo.bar@mail.com>\nCo-authored-by: B C <b@c.com>'

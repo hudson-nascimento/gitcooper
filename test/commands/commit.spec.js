@@ -12,15 +12,22 @@ import guard from '../../src/commands/commit/guard'
 import prompts from '../../src/commands/commit/prompts'
 import * as stubs from './stubs'
 import filter from '../../src/commands/commit/filter'
+import * as redmine from '../../src/services/redmine'
+import createTimeEntry from '../../src/commands/commit/options/createTimeEntry'
+import updateIssueStatus from '../../src/commands/commit/options/updateIssueStatus'
 
 jest.mock('../../src/utils/getEmojis')
 jest.mock('../../src/utils/isHookCreated')
 jest.mock('../../src/utils/configurationVault')
+jest.mock('../../src/services/redmine')
+jest.mock('../../src/commands/commit/options/createTimeEntry')
+jest.mock('../../src/commands/commit/options/updateIssueStatus')
 
 describe('commit command', () => {
   describe('withClient', () => {
-    describe('with no autoAdd and no signed commits and no scope and no refs and no co-authors', () => {
+    describe('with no autoAdd and no signed commits and no scope and no refs and no co-authors and', () => {
       beforeAll(() => {
+        console.error = jest.fn()
         console.log = jest.fn()
         execa.mockReturnValue({ stdout: stubs.commitResult })
         inquirer.prompt.mockReturnValue(
@@ -48,10 +55,130 @@ describe('commit command', () => {
       it('should print the result to the console', () => {
         expect(console.log).toHaveBeenCalledWith(stubs.commitResult)
       })
+
+      it('should not try get issue in execution on redmine', () => {
+        expect(redmine.getLastIssueInExecution).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('without refs, with time entry and newStatus', () => {
+      const lastIssueInExecution = 1
+      beforeAll(() => {
+        console.log = jest.fn()
+        redmine.getLastIssueInExecution.mockReturnValue(lastIssueInExecution)
+        inquirer.prompt.mockReturnValue(
+          Promise.resolve(
+            stubs.clientCommitAnswersWithoutRefsWithTimeEntryAndNewStatus
+          )
+        )
+        getEmojis.mockResolvedValue(stubs.gitmojis)
+        isHookCreated.mockResolvedValue(false)
+
+        commit('client', { timeEntry: true, changeStatus: true })
+      })
+
+      it('should get last issue in execution', () => {
+        expect(redmine.getLastIssueInExecution).toHaveBeenCalledTimes(1)
+      })
+      it('should call command to create a time entry using last issue in execution and commit title', () => {
+        expect(createTimeEntry).toHaveBeenCalledTimes(1)
+        expect(createTimeEntry).toHaveBeenCalledWith(
+          lastIssueInExecution,
+          stubs.clientCommitAnswersWithoutRefsWithTimeEntryAndNewStatus.title
+        )
+      })
+      it('should call command to update issue status using last issue in execution and new status', () => {
+        expect(updateIssueStatus).toHaveBeenCalledTimes(1)
+        expect(updateIssueStatus).toHaveBeenCalledWith(
+          lastIssueInExecution,
+          stubs.clientCommitAnswersWithoutRefsWithTimeEntryAndNewStatus
+            .newStatus
+        )
+      })
+    })
+
+    describe('with refs and with time entry and newStatus', () => {
+      describe('with created time entry returning true and update issue status throwing an error', () => {
+        beforeAll(() => {
+          createTimeEntry.mockReset()
+          updateIssueStatus.mockReset()
+          redmine.getLastIssueInExecution.mockReset()
+
+          console.log = jest.fn()
+          inquirer.prompt.mockReturnValue(
+            Promise.resolve(
+              stubs.clientCommitAnswersWithRefsWithTimeEntryAndNewStatus
+            )
+          )
+          getEmojis.mockResolvedValue(stubs.gitmojis)
+          isHookCreated.mockResolvedValue(false)
+          createTimeEntry.mockReturnValue(true)
+
+          updateIssueStatus.mockImplementation(() =>
+            Promise.reject({
+              response: {
+                data: {
+                  errors: ['Unexpected error']
+                }
+              }
+            })
+          )
+
+          commit('client', { timeEntry: true, changeStatus: true, refs: true })
+        })
+
+        it.only('should print the errors on console', () => {
+          expect(console.log).toHaveBeenLastCalledWith(
+            chalk.red(
+              '\nError: Cannot change the issue status!\n Redmine response: Unexpected error\n'
+            )
+          )
+        })
+      })
+
+      describe('All executing with success', () => {
+        beforeAll(() => {
+          createTimeEntry.mockReset()
+          updateIssueStatus.mockReset()
+          redmine.getLastIssueInExecution.mockReset()
+
+          console.log = jest.fn()
+          inquirer.prompt.mockReturnValue(
+            Promise.resolve(
+              stubs.clientCommitAnswersWithRefsWithTimeEntryAndNewStatus
+            )
+          )
+          getEmojis.mockResolvedValue(stubs.gitmojis)
+          isHookCreated.mockResolvedValue(false)
+
+          commit('client', { timeEntry: true, changeStatus: true, refs: true })
+        })
+        it('should not try get last issue in execution', () => {
+          expect(redmine.getLastIssueInExecution).toHaveBeenCalledTimes(0)
+        })
+
+        it('should call command to create a time entry for issue in refs', () => {
+          expect(createTimeEntry).toHaveBeenCalledTimes(1)
+          expect(createTimeEntry).toHaveBeenCalledWith(
+            stubs.clientCommitAnswersWithRefsWithTimeEntryAndNewStatus.refs,
+            stubs.clientCommitAnswersWithoutRefsWithTimeEntryAndNewStatus.title
+          )
+        })
+        it('should call command to update issue status for issue in refs', () => {
+          expect(updateIssueStatus).toHaveBeenCalledTimes(1)
+          expect(updateIssueStatus).toHaveBeenCalledWith(
+            stubs.clientCommitAnswersWithRefsWithTimeEntryAndNewStatus.refs,
+            stubs.clientCommitAnswersWithoutRefsWithTimeEntryAndNewStatus
+              .newStatus
+          )
+        })
+      })
     })
 
     describe('with autoAdd, signed commits, scope, refs and co-authors', () => {
       beforeAll(() => {
+        inquirer.prompt.mockReset()
+
         console.log = jest.fn()
         execa.mockReturnValue({ stdout: stubs.commitResult })
         inquirer.prompt.mockReturnValue(

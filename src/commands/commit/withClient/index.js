@@ -70,12 +70,14 @@ const withClient = async (answers: Answers) => {
       }
     }
 
-    if (!answers.sandbox) {
-      const { stdout } = await execa('git', cmdArgs)
+    const { stdout } = await execa('git', cmdArgs)
 
-      console.log(stdout)
-    } else {
-      console.log(`Sandbox: git ${cmdArgs.join(' ')}`)
+    console.log(stdout)
+
+    const { timeEntry, newStatus } = answers
+
+    if (!timeEntry && !newStatus) {
+      return
     }
 
     let issue = answers.refs ? answers.refs.replace('#', '').trim() : ''
@@ -88,13 +90,13 @@ const withClient = async (answers: Answers) => {
       )
     }
 
-    if (answers.timeEntry) {
+    if (timeEntry) {
       console.log(`Creating time entry on Redmine for issue ${issue}...`)
 
-      const created = await createTimeEntry(issue, title)
+      const created = await createTimeEntry(issue, title.replace(/:.*: /gm, ''))
 
       if (created) {
-        console.log(`Time entry has been created with success on Redmine!`)
+        console.log('Time entry has been created with success on Redmine!')
       } else {
         console.error(
           'Failed to create time entry on Redmine! Please, check log above.'
@@ -102,19 +104,15 @@ const withClient = async (answers: Answers) => {
       }
     }
 
-    const newStatus = answers.newStatus
-
     if (newStatus) {
       console.log(
         `The status of the issue will change to "${redmine.IssueStatusLabel[newStatus]}"...`
       )
 
       try {
-        if (!answers.sandbox) {
-          await updateIssueStatus(issue, newStatus)
+        await updateIssueStatus(issue, newStatus)
 
-          console.log('Status changed with success!')
-        }
+        console.log('Status changed with success!')
       } catch (err) {
         console.log(
           chalk.red(
