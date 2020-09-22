@@ -18,7 +18,7 @@ const cli = meow(
     --coAuthors,    Show option to add Co-Authors on commit. Works only with --commmit option
     --refs,         Show option to add issue on commit. Works only with --commmit option
     --timeEntry,    Create a time entry registry on redmine
-    --sandbox,      Don't really create the time entry on redmine
+    --changeStatus  Show options to change issue status after commit
     --list, -l      List all the available gitmojis
     --search, -s    Search gitmojis
     --version, -v   Print gitcooper-cli installed version
@@ -38,6 +38,7 @@ const cli = meow(
       coAuthors: { type: 'boolean' },
       refs: { type: 'boolean' },
       timeEntry: { type: 'boolean' },
+      changeStatus: { type: 'boolean' },
       sandbox: { type: 'boolean' }
     }
   }

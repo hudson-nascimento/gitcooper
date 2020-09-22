@@ -27,9 +27,9 @@ Run `gitcooper -g` and answer the prompts.
 
 ## Usage
 
-### Example
+### Examples
 
-To commit and create a time entry on redime just run (Don't forget add to be commit with `git add`):
+To commit and create a time entry on Redmine just run (Don't forget add to be commit with `git add`):
 
 ```sh
 gitcooper -c --timeEntry
@@ -43,11 +43,22 @@ gitcooper -c --timeEntry --refs
 ? Issue reference: 123
 ```
 
+If you want change the issue status you can pass the option `--changeStatus`. E.g.:
+
 ```sh
-gitcooper --help
+gitcooper -c --timeEntry --changeStatus
+// Another questions...
+? New issue status:
+> Finished
+  Paused
+  Homolog
 ```
 
 ## Comannds
+
+```sh
+gitcooper --help
+```
 
 ```
 The Coopersystem interactive client for create your commits.
@@ -60,6 +71,7 @@ The Coopersystem interactive client for create your commits.
     --coAuthors,    Show option to add Co-Authors on commit. Works only with --commmit option
     --refs,         Show option to add issue on commit. Works only with --commmit option
     --timeEntry,    Create a time entry registry on redmine
+    --changeStatus  Show options to change issue status after commit
     --list, -l      List all the available gitmojis
     --search, -s    Search gitmojis
     --version, -v   Print gitcooper-cli installed version
@@ -114,6 +126,12 @@ Allow to add commit Issue/PR reference:
 ##### Time entry
 
 Add time entry on redmine for issue defined on `--refs` option. If `--refs` option is not passed, the last updated issue in execution will be used to create time entry.
+
+IMPORTANT: You must defined your LDAP credentials using `gitcooper -g` option.
+
+##### Change Status
+
+Change issue status on redmine for issue defined on `--refs` option or the last updated issue in execution.
 
 IMPORTANT: You must defined your LDAP credentials using `gitcooper -g` option.
 

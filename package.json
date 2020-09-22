@@ -17,11 +17,9 @@
     "clean": "rm -rf lib",
     "flow": "flow",
     "lint": "prettier --check src/**/*.js",
-    "prepublishOnly": "yarn run lint && yarn run flow && yarn run clean && yarn run build",
+    "prepublishOnly": "yarn run lint && yarn run flow && yarn run test && yarn run clean && yarn run build",
     "coverage": "codecov",
-    "test": "jest",
-    "cy:run": "cypress run",
-    "time-entry": "yarn cy:run --spec \"cypress/integration/time-entry.spec.js\""
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -39,9 +37,12 @@
     "url": "https://github.com/coopersystem-fsd/gitcooper/issues"
   },
   "dependencies": {
+    "@smartinsf/redmine-client": "^0.2.1",
+    "axios": "^0.20.0",
+    "axios-cookiejar-support": "^1.0.0",
     "chalk": "^4.1.0",
     "conf": "^7.0.1",
-    "cypress": "^4.12.1",
+    "date-fns": "^2.16.1",
     "execa": "^4.0.0",
     "fuse.js": "^3.4.6",
     "inquirer": "^7.0.0",
@@ -50,6 +51,7 @@
     "node-fetch": "^2.6.0",
     "ora": "^4.0.2",
     "path-exists": "^3.0.0",
+    "tough-cookie": "^4.0.0",
     "update-notifier": "^4.0.0"
   },
   "devDependencies": {

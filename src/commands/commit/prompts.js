@@ -1,5 +1,6 @@
 // @flow
 import inquirer from 'inquirer'
+import { IssueStatus } from '../../services/redmine'
 
 import configurationVault from '../../utils/configurationVault'
 import filterGitmojis from '../../utils/filterGitmojis'
@@ -25,14 +26,16 @@ export type Answers = {
   refs: string,
   coAuthors: string,
   timeEntry: boolean,
-  sandbox?: boolean
+  sandbox?: boolean,
+  newStatus: number
 }
 
 export type Options = {
   refs: boolean,
   coAuthors: boolean,
   timeEntry: boolean,
-  sandbox?: boolean
+  sandbox?: boolean,
+  changeStatus: boolean
 }
 
 export default (gitmojis: Array<Gitmoji>, options: Options): Array<Object> => [
@@ -107,6 +110,30 @@ export default (gitmojis: Array<Gitmoji>, options: Options): Array<Object> => [
           type: 'confirm',
           default: true,
           message: 'Use sandbox?:'
+        }
+      ]
+    : []),
+  ...((options && options.changeStatus) || false
+    ? [
+        {
+          name: 'newStatus',
+          type: 'list',
+          default: IssueStatus.FINISHED,
+          choices: [
+            {
+              name: 'Finished',
+              value: IssueStatus.FINISHED
+            },
+            {
+              name: 'Paused',
+              value: IssueStatus.PAUSED
+            },
+            {
+              name: 'Homolog',
+              value: IssueStatus.HOMOLOG
+            }
+          ],
+          message: 'New issue status:'
         }
       ]
     : [])
