@@ -1,6 +1,6 @@
 {
   "name": "@coopersystem-fsd/gitcooper-cli",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A gitmoji client for using emojis on commit messages personalized for Coopersystem.",
   "engines": {
     "node": ">=10"
