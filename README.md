@@ -54,7 +54,7 @@ gitcooper -c --timeEntry --changeStatus
   Homolog
 ```
 
-## Comannds
+## Commands
 
 ```sh
 gitcooper --help
@@ -66,7 +66,7 @@ The Coopersystem interactive client for create your commits.
   Usage
     $ gitcooper
   Options
-    --config, -g     Setup gitcooper-cli preferences.
+    --config, -g    Setup gitcooper-cli preferences.
     --commit, -c    Interactively commit using the prompts
     --coAuthors,    Show option to add Co-Authors on commit. Works only with --commmit option
     --refs,         Show option to add issue on commit. Works only with --commmit option
